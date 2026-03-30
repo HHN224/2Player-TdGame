@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "x64\\Release\\game_manager.h.obj",
+            "outputs": [
+                "C:\\Users\\OMEN\\Desktop\\Pve_TdGame\\TdGame\\TdGame\\x64\\Release\\vc145.pdb",
+                "x64\\Release\\",
+                "C:\\Users\\OMEN\\Desktop\\Pve_TdGame\\TdGame\\TdGame\\x64\\Release\\game_manager.h.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "game_manager.h",
+                    "source-path": "c:\\users\\omen\\desktop\\pve_tdgame\\tdgame\\tdgame\\game_manager.h",
+                    "lookup-method": "absolute"
+                }
+            ],
+            "requires": []
+        }
+    ]
+}
