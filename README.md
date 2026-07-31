@@ -15,6 +15,22 @@
 
 2Player-TdGame 是一款使用 C++20 与 SDL2 构建的 Windows 塔防游戏。鼠标玩家负责布置和升级防御塔，键盘玩家控制英雄移动并施放技能；两名玩家需要共享金币、抵御连续波次，并在基地生命耗尽前消灭所有敌人。
 
+## 游戏画面
+
+<div align="center">
+
+<img src="docs/screenshots/gameplay-overview.png" alt="2Player-TdGame 完整游戏地图与状态栏" width="100%" />
+
+<sub>完整地图、基地、英雄与状态栏</sub>
+
+<br /><br />
+
+<img src="docs/screenshots/tower-placement.png" alt="战斗中打开建塔面板并预览防御塔攻击范围" width="100%" />
+
+<sub>迎击敌人时选择防御塔，并实时预览攻击范围</sub>
+
+</div>
+
 ## 游戏特色
 
 - 本地双人协作：键盘控制英雄，鼠标管理塔防
@@ -82,32 +98,12 @@ cd .\TdGame
 
 修改前建议保留一份原始文件，并确保 JSON 语法和地图标记仍符合加载器预期。
 
-## 架构概览
-
-```mermaid
-flowchart LR
-    Input["键盘与鼠标输入"] --> Game["GameManager<br/>输入、更新、渲染循环"]
-    Files["config.json<br/>level.json<br/>map.csv"] --> Config["ConfigManager"]
-    Config --> Systems["游戏系统"]
-    Game --> Systems
-    Systems --> Wave["WaveManager"]
-    Systems --> Enemy["EnemyManager"]
-    Systems --> Tower["TowerManager<br/>BulletManager"]
-    Systems --> Player["PlayerManager<br/>CoinManager"]
-    Systems --> Home["HomeManager"]
-    Wave --> Enemy
-    Tower --> Enemy
-    Player --> Enemy
-    Enemy --> Home
-    Systems --> SDL["SDL2<br/>图形、字体与音频"]
-```
-
-各子系统通过单例管理器共享状态；`GameManager` 负责驱动输入、更新和渲染，`ConfigManager` 则从外部文件加载地图、波次和数值配置。
-
 ## 项目结构
 
 ```text
 .
+├── docs/
+│   └── screenshots/        # README 使用的实机游戏截图
 ├── TdGame/
 │   ├── resources/          # 精灵、界面、字体、音乐与音效
 │   ├── x64/Release/        # 已有的 Release 构建产物
