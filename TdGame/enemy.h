@@ -78,8 +78,6 @@ public:
 		static SDL_Point point;
 		static const int offset_y = 2;
 		static const Vector2 size_hp_bar = { 40 , 8 };
-		static const SDL_Color color_border = { 116, 185, 124, 255 };
-		static const SDL_Color color_conent = { 226, 255, 194, 255 };
 
 		point.x = (int)(position.x - size.x / 2);
 		point.y = (int)(position.y - size.y / 2);
@@ -92,11 +90,11 @@ public:
 			rect.y = (int)(position.y - size.y / 2 - size_hp_bar.y - offset_y );
 			rect.w = (int)(size_hp_bar.x * (hp / max_hp));
 			rect.h = (int)size_hp_bar.y;
-			SDL_SetRenderDrawColor(renderer, color_conent.r, color_conent.g, color_conent.b, color_conent.a);
+			SDL_SetRenderDrawColor(renderer, color_hp_fill.r, color_hp_fill.g, color_hp_fill.b, color_hp_fill.a);
 			SDL_RenderFillRect(renderer, &rect);
 
 			rect.w = (int)size_hp_bar.x;
-			SDL_SetRenderDrawColor(renderer, color_border.r, color_border.g, color_border.b, color_border.a);
+			SDL_SetRenderDrawColor(renderer, color_hp_border.r, color_hp_border.g, color_hp_border.b, color_hp_border.a);
 			SDL_RenderDrawRect(renderer, &rect);
 		}
 	}
@@ -228,6 +226,9 @@ protected:
 	double recover_interval = 0;
 	double recover_range = 0;
 	double recover_intensity;
+
+	SDL_Color color_hp_fill = { 226, 255, 194, 255 };
+	SDL_Color color_hp_border = { 116, 185, 124, 255 };
 
 
 private:

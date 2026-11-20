@@ -63,6 +63,8 @@ public:
 
 	bool is_game_win = true;
 	bool is_game_over = false;
+	bool is_paused = false;
+	double time_scale = 1;
 	SDL_Rect rect_tile_map = { 0 };
 
 	BasicTemplate basic_template;
@@ -74,6 +76,7 @@ public:
 	TowerTemplate gunner_template;
 
 	EnemyTemplate slime_template;
+	EnemyTemplate rush_slime_template;
 	EnemyTemplate king_slime_template;
 	EnemyTemplate skeleton_template;
 	EnemyTemplate goblin_template;
@@ -146,9 +149,11 @@ public:
 					if (json_spawn_event_enemy_type && json_spawn_event_enemy_type->type == cJSON_String)
 					{
 						const std::string str_enemy_type = json_spawn_event_enemy_type->valuestring;
-						if(str_enemy_type == "Slime")
+						if(str_enemy_type == "Slime" || str_enemy_type == "Slim")
 							spawn_event.enemy_type = EnemyType::Slime;
-						else if (str_enemy_type == "KingSlime")
+						else if (str_enemy_type == "RushSlime")
+							spawn_event.enemy_type = EnemyType::RushSlime;
+						else if (str_enemy_type == "KingSlime" || str_enemy_type == "KingSlim")
 							spawn_event.enemy_type = EnemyType::KingSlime;
 						else if (str_enemy_type == "Skeleton")
 							spawn_event.enemy_type = EnemyType::Skeleton;
@@ -214,6 +219,7 @@ public:
 		parse_tower_template(gunner_template, cJSON_GetObjectItem(json_tower, "gunner"));
 
 		parse_enemy_template(slime_template, cJSON_GetObjectItem(json_enemy, "slime"));
+		parse_enemy_template(rush_slime_template, cJSON_GetObjectItem(json_enemy, "rush_slime"));
 		parse_enemy_template(king_slime_template, cJSON_GetObjectItem(json_enemy, "king_slime"));
 		parse_enemy_template(skeleton_template, cJSON_GetObjectItem(json_enemy, "skeleton"));
 		parse_enemy_template(goblin_template, cJSON_GetObjectItem(json_enemy, "goblin"));
@@ -252,7 +258,7 @@ private:
 		
 		cJSON* json_speed = cJSON_GetObjectItem(json_root, "speed");
 		cJSON* json_normal_attack_interval = cJSON_GetObjectItem(json_root, "normal_attack_interval");
-		cJSON* json_normal_attack_damage = cJSON_GetObjectItem(json_root, "json_normal_attack_damage");
+		cJSON* json_normal_attack_damage = cJSON_GetObjectItem(json_root, "normal_attack_damage");
 		cJSON* json_skill_interval = cJSON_GetObjectItem(json_root, "skill_interval");
 		cJSON* json_skill_damage = cJSON_GetObjectItem(json_root, "skill_damage");
 

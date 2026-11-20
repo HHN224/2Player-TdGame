@@ -74,6 +74,13 @@ public:
 		this->on_finished = on_finished;
 	}
 
+	void set_tint(Uint8 r, Uint8 g, Uint8 b)
+	{
+		tint_r = r;
+		tint_g = g;
+		tint_b = b;
+	}
+
 	void on_update(double delta)
 	{
 		timer.on_update(delta);
@@ -86,7 +93,9 @@ public:
 		rect_dst.y = pos_dst.y, rect_dst.x = pos_dst.x;
 		rect_dst.w = width_frame, rect_dst.h = height_frame;
 
+		SDL_SetTextureColorMod(texture, tint_r, tint_g, tint_b);
 		SDL_RenderCopyEx(renderer, texture, &rect_src_list[idx_frame], &rect_dst, angle, nullptr, SDL_RendererFlip:: SDL_FLIP_NONE);
+		SDL_SetTextureColorMod(texture, 255, 255, 255);
 	}
 
 private:
@@ -97,6 +106,9 @@ private:
 	SDL_Texture* texture = nullptr;
 	std:: vector<SDL_Rect> rect_src_list;
 	int width_frame, height_frame;
+	Uint8 tint_r = 255;
+	Uint8 tint_g = 255;
+	Uint8 tint_b = 255;
 };
 
 #endif // !_ANIMATION_H

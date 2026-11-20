@@ -129,6 +129,22 @@
 				"interval":	1,
 				"point":	1,
 				"enemy":	"Skeleton"
+			}, {
+				"interval":	1.2,
+				"point":	2,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	0.35,
+				"point":	1,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	0.35,
+				"point":	2,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	0.35,
+				"point":	1,
+				"enemy":	"RushSlime"
 			}]
 	}, {
 		"rewards":	300,
@@ -181,5 +197,73 @@
 				"interval":	0,
 				"point":	2,
 				"enemy":	"Goblin"
+			}]
+	}, {
+		"rewards":	450,
+		"interval":	8,
+		"spawn_list":	[{
+				"interval":	0.6,
+				"point":	1,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	0.35,
+				"point":	2,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	0.45,
+				"point":	1,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	0.35,
+				"point":	2,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	0.45,
+				"point":	1,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	0.35,
+				"point":	2,
+				"enemy":	"Skeleton"
+			}, {
+				"interval":	0.7,
+				"point":	1,
+				"enemy":	"Goblin"
+			}, {
+				"interval":	0.35,
+				"point":	2,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	0.8,
+				"point":	1,
+				"enemy":	"GoblinPriest"
+			}, {
+				"interval":	0.4,
+				"point":	2,
+				"enemy":	"Goblin"
+			}, {
+				"interval":	0.8,
+				"point":	1,
+				"enemy":	"KingSlime"
+			}, {
+				"interval":	0.4,
+				"point":	2,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	0.7,
+				"point":	1,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	0.35,
+				"point":	2,
+				"enemy":	"Skeleton"
+			}, {
+				"interval":	0.6,
+				"point":	1,
+				"enemy":	"Skeleton"
+			}, {
+				"interval":	0.35,
+				"point":	2,
+				"enemy":	"KingSlime"
 			}]
 	}]

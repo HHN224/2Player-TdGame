@@ -6,6 +6,7 @@
 #include"config_manager.h"
 #include"home_manager.h"
 #include"slime_enemy.h"
+#include"rush_slime_enemy.h"
 #include"king_slime_enemy.h"
 #include"skeleton_enemy.h"
 #include"goblin_enemy.h"
@@ -58,6 +59,9 @@ public:
 		{
 		case EnemyType::Slime:
 			enemy = new SlimeEnemy();
+			break;
+		case EnemyType::RushSlime:
+			enemy = new RushSlimeEnemy();
 			break;
 		case EnemyType::KingSlime:
 			enemy = new KingSlimeEnemy();

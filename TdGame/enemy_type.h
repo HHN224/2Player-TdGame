@@ -4,6 +4,7 @@
 enum class EnemyType
 {
 	Slime,
+	RushSlime,
 	KingSlime,
 	Skeleton,
 	Goblin,

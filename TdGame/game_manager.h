@@ -95,6 +95,8 @@ protected:
 	};
 	~GameManager()
 	{
+		SDL_DestroyTexture(tex_pause_title);
+		SDL_DestroyTexture(tex_pause_hint);
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
 
@@ -123,6 +125,30 @@ private:
 		{
 		case SDL_QUIT:
 			is_quit = true;
+			break;
+		case SDL_KEYDOWN:
+			if (instance->is_game_over || event.key.repeat)
+				break;
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_SPACE:
+				instance->is_paused = !instance->is_paused;
+				break;
+			case SDLK_1:
+			case SDLK_KP_1:
+				instance->time_scale = 1;
+				break;
+			case SDLK_2:
+			case SDLK_KP_2:
+				instance->time_scale = 2;
+				break;
+			case SDLK_3:
+			case SDLK_KP_3:
+				instance->time_scale = 3;
+				break;
+			default:
+				break;
+			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if(instance->is_game_over)
@@ -167,12 +193,14 @@ private:
 			status_bar.on_update(renderer);
 			place_panel->on_update(renderer);
 			upgrade_panel->on_update(renderer);
-			WaveManager::GetInstance()->on_update(delta);
-			EnemyManager::GetInstance()->on_update(delta);
-			BulletManager::GetInstance()->on_update(delta);
-			TowerManager::GetInstance()->on_update(delta);
-			CoinManager::GetInstance()->on_update(delta);
-			PlayerManager::GetInstance()->on_update(delta);
+
+			const double sim_delta = instance->is_paused ? 0.0 : delta * instance->time_scale;
+			WaveManager::GetInstance()->on_update(sim_delta);
+			EnemyManager::GetInstance()->on_update(sim_delta);
+			BulletManager::GetInstance()->on_update(sim_delta);
+			TowerManager::GetInstance()->on_update(sim_delta);
+			CoinManager::GetInstance()->on_update(sim_delta);
+			PlayerManager::GetInstance()->on_update(sim_delta);
 
 			return;
 		}
@@ -207,9 +235,15 @@ private:
 
 		if (!instance->is_game_over)
 		{
+			if (instance->is_paused)
+				render_pause_dim();
+
 			place_panel->on_render(renderer);
 			upgrade_panel->on_render(renderer);
 			status_bar.on_render(renderer);
+
+			if (instance->is_paused)
+				render_pause_label();
 
 			return;
 		}
@@ -327,6 +361,82 @@ private:
 		return (tile.decoration < 0 && tile.direction == Tile:: Direction:: None && !tile.has_tower);
 	}
 
+	void render_pause_dim()
+	{
+		int width_screen = 0, height_screen = 0;
+		SDL_GetWindowSizeInPixels(window, &width_screen, &height_screen);
+
+		SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+		SDL_SetRenderDrawColor(renderer, 12, 10, 16, 140);
+		const SDL_Rect shade = { 0, 0, width_screen, height_screen };
+		SDL_RenderFillRect(renderer, &shade);
+		SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+	}
+
+	void render_pause_label()
+	{
+		ensure_pause_text();
+		if (!tex_pause_title || !tex_pause_hint)
+			return;
+
+		int width_screen = 0, height_screen = 0;
+		SDL_GetWindowSizeInPixels(window, &width_screen, &height_screen);
+
+		SDL_Rect box;
+		box.w = pause_hint_w + 48;
+		box.h = pause_title_h + pause_hint_h + 36;
+		box.x = (width_screen - box.w) / 2;
+		box.y = (height_screen - box.h) / 2;
+
+		SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+		SDL_SetRenderDrawColor(renderer, 36, 24, 28, 230);
+		SDL_RenderFillRect(renderer, &box);
+		SDL_SetRenderDrawColor(renderer, 255, 196, 120, 255);
+		SDL_RenderDrawRect(renderer, &box);
+		SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+
+		SDL_Rect rect_dst;
+		rect_dst.w = pause_title_w;
+		rect_dst.h = pause_title_h;
+		rect_dst.x = (width_screen - pause_title_w) / 2;
+		rect_dst.y = box.y + 14;
+		SDL_RenderCopy(renderer, tex_pause_title, nullptr, &rect_dst);
+
+		rect_dst.w = pause_hint_w;
+		rect_dst.h = pause_hint_h;
+		rect_dst.x = (width_screen - pause_hint_w) / 2;
+		rect_dst.y = rect_dst.y + pause_title_h + 8;
+		SDL_RenderCopy(renderer, tex_pause_hint, nullptr, &rect_dst);
+	}
+
+	void ensure_pause_text()
+	{
+		if (pause_label_ready)
+			return;
+
+		TTF_Font* font = ResourcesManager::GetInstance()->get_font_pool().find(ResID::Font_Main)->second;
+		const SDL_Color title_color = { 255, 228, 196, 255 };
+		const SDL_Color hint_color = { 236, 220, 196, 255 };
+		SDL_Surface* title = TTF_RenderUTF8_Blended(font, "暂停", title_color);
+		SDL_Surface* hint = TTF_RenderUTF8_Blended(font, "空格继续     1 / 2 / 3 倍速", hint_color);
+		if (title)
+		{
+			pause_title_w = title->w;
+			pause_title_h = title->h;
+			tex_pause_title = SDL_CreateTextureFromSurface(renderer, title);
+			SDL_FreeSurface(title);
+		}
+		if (hint)
+		{
+			pause_hint_w = hint->w;
+			pause_hint_h = hint->h;
+			tex_pause_hint = SDL_CreateTextureFromSurface(renderer, hint);
+			SDL_FreeSurface(hint);
+		}
+
+		pause_label_ready = tex_pause_title && tex_pause_hint;
+	}
+
 	void get_selected_tile_center_pos(SDL_Point& pos, const SDL_Point& idx_tile_selected) const
 	{
 		static const SDL_Rect& rect_tile_map = ConfigManager::GetInstance()->rect_tile_map;	
@@ -346,6 +456,13 @@ private:
 	SDL_Renderer* renderer;
 
 	SDL_Texture* tex_tile_map = nullptr;
+	SDL_Texture* tex_pause_title = nullptr;
+	SDL_Texture* tex_pause_hint = nullptr;
+	int pause_title_w = 0;
+	int pause_title_h = 0;
+	int pause_hint_w = 0;
+	int pause_hint_h = 0;
+	bool pause_label_ready = false;
 
 	Panel* place_panel = nullptr;
 	Panel* upgrade_panel = nullptr;

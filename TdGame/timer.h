@@ -40,6 +40,12 @@ public:
 		paused = false;
 	}
 
+	double get_remaining() const
+	{
+		double remaining = wait_time - pass_time;
+		return remaining > 0 ? remaining : 0;
+	}
+
 	void on_update(double delta)
 	{
 		if(paused)

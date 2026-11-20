@@ -21,7 +21,7 @@ public:
 
 		if(!is_wave_started)
 			timer_start_wave.on_update(delta);
-		else
+		else if (!is_spawned_last_enemy)
 			timer_spawn_enemy.on_update(delta);
 
 		if (is_spawned_last_enemy && EnemyManager::GetInstance()->check_cleared())
@@ -38,7 +38,7 @@ public:
 			else
 			{
 				idx_spawn_event = 0;
-				is_wave_started = true;
+				is_wave_started = false;
 				is_spawned_last_enemy = false;
 
 				const Wave& wave = instance->wave_list[idx_wave];
@@ -47,6 +47,24 @@ public:
 			}
 		}
 
+	}
+
+	int get_wave_number() const
+	{
+		return idx_wave + 1;
+	}
+
+	bool is_waiting_to_spawn() const
+	{
+		return !is_wave_started;
+	}
+
+	double get_seconds_until_spawn() const
+	{
+		if (is_wave_started)
+			return 0;
+
+		return timer_start_wave.get_remaining();
 	}
 protected:
 
@@ -70,13 +88,19 @@ protected:
 			[&]()
 			{
 				const std::vector<Wave::SpawnEvent>& spawn_event_list = wave_list[idx_wave].spawn_event_list;
+				if (idx_spawn_event >= (int)spawn_event_list.size())
+				{
+					is_spawned_last_enemy = true;
+					return;
+				}
+
 				const Wave::SpawnEvent& spawn_event = spawn_event_list[idx_spawn_event];
 
 				EnemyManager:: GetInstance()->spawn_enemy(spawn_event.enemy_type, spawn_event.spawn_point);
 
 				idx_spawn_event++;
 
-				if (idx_spawn_event >= spawn_event_list.size())
+				if (idx_spawn_event >= (int)spawn_event_list.size())
 				{
 					is_spawned_last_enemy = true;
 					return;

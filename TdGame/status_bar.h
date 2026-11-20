@@ -5,10 +5,13 @@
 #include"coin_manager.h"
 #include"home_manager.h"
 #include"player_manager.h"
+#include"wave_manager.h"
+#include"config_manager.h"
 
 
 #include <SDL2_gfxPrimitives.h>
 #include<SDL.h>
+#include<cmath>
 #include<string>
 
 class StatusBar
@@ -42,6 +45,26 @@ public:
 
 		SDL_FreeSurface(suf_text_background);
 		SDL_FreeSurface(suf_text_foreground);
+
+		SDL_DestroyTexture(tex_wave_background);
+		tex_wave_background = nullptr;
+		SDL_DestroyTexture(tex_wave_foreground);
+		tex_wave_foreground = nullptr;
+
+		std::string wave_text = make_wave_text();
+		SDL_Surface* suf_wave_background = TTF_RenderUTF8_Blended(font, wave_text.c_str(), color_wave_background);
+		SDL_Surface* suf_wave_foreground = TTF_RenderUTF8_Blended(font, wave_text.c_str(), color_wave_foreground);
+		if (suf_wave_background && suf_wave_foreground)
+		{
+			width_wave_text = suf_wave_background->w;
+			height_wave_text = suf_wave_background->h;
+			tex_wave_background = SDL_CreateTextureFromSurface(renderer, suf_wave_background);
+			tex_wave_foreground = SDL_CreateTextureFromSurface(renderer, suf_wave_foreground);
+		}
+		if (suf_wave_background)
+			SDL_FreeSurface(suf_wave_background);
+		if (suf_wave_foreground)
+			SDL_FreeSurface(suf_wave_foreground);
 	}
 
 	void on_render(SDL_Renderer* renderer)
@@ -79,6 +102,19 @@ public:
 		rect_dst.y -= offset_shadow.y;
 		SDL_RenderCopy(renderer, tex_text_foreground, nullptr, &rect_dst);
 
+		if (tex_wave_background && tex_wave_foreground)
+		{
+			rect_dst.x = position.x + 470 + offset_shadow.x;
+			rect_dst.y = position.y + 18 + offset_shadow.y;
+			rect_dst.w = width_wave_text;
+			rect_dst.h = height_wave_text;
+			SDL_RenderCopy(renderer, tex_wave_background, nullptr, &rect_dst);
+
+			rect_dst.x -= offset_shadow.x;
+			rect_dst.y -= offset_shadow.y;
+			SDL_RenderCopy(renderer, tex_wave_foreground, nullptr, &rect_dst);
+		}
+
 		rect_dst.x = position.x + (78 - 65) / 2;
 		rect_dst.y = position.y + 78 + 5;
 		rect_dst.w = 65, rect_dst.h = 65;
@@ -106,14 +142,41 @@ private:
 	const SDL_Point offset_shadow = { 2, 2 };
 	const SDL_Color color_text_background = { 175, 175, 175, 255 };
 	const SDL_Color color_text_foreground = { 255, 255, 255, 255 };
+	const SDL_Color color_wave_background = { 72, 42, 28, 255 };
+	const SDL_Color color_wave_foreground = { 255, 214, 140, 255 };
 	const SDL_Color color_mp_bar_background = { 48, 40, 51, 255 };
 	const SDL_Color color_mp_bar_foreground = { 144, 121, 173, 255 };
 
 private:
 	SDL_Point position = { 0, 0 };
 	int width_text = 0, height_text = 0;
+	int width_wave_text = 0, height_wave_text = 0;
 	SDL_Texture* tex_text_background = nullptr;
 	SDL_Texture* tex_text_foreground = nullptr;
+	SDL_Texture* tex_wave_background = nullptr;
+	SDL_Texture* tex_wave_foreground = nullptr;
+
+	std::string make_wave_text() const
+	{
+		const ConfigManager* config = ConfigManager::GetInstance();
+		const WaveManager* waves = WaveManager::GetInstance();
+		const int total = (int)config->wave_list.size();
+		std::string text = "第 " + std::to_string(waves->get_wave_number()) + "/" + std::to_string(total) + " 波";
+
+		if (config->is_paused)
+			text += "   暂停";
+		else if (waves->is_waiting_to_spawn())
+		{
+			int seconds = (int)std::ceil(waves->get_seconds_until_spawn());
+			if (seconds < 1)
+				seconds = 1;
+			text += "   下波 " + std::to_string(seconds) + " 秒";
+		}
+		else
+			text += "   x" + std::to_string((int)config->time_scale);
+
+		return text;
+	}
 
 };
 
