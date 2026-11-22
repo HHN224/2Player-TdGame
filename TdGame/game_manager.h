@@ -146,12 +146,25 @@ private:
 			case SDLK_KP_3:
 				instance->time_scale = 3;
 				break;
+			case SDLK_r:
+				repair_home();
+				break;
 			default:
 				break;
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if(instance->is_game_over)
+				break;
+			if (event.button.button == SDL_BUTTON_RIGHT)
+			{
+				place_panel->hide();
+				upgrade_panel->hide();
+				if (get_cursor_idx_tile(idx_tile_selected, event.motion.x, event.motion.y))
+					TowerManager::GetInstance()->sell_tower(idx_tile_selected);
+				break;
+			}
+			if (event.button.button != SDL_BUTTON_LEFT)
 				break;
 			if (get_cursor_idx_tile(idx_tile_selected, event.motion.x, event.motion.y))
 			{
@@ -359,6 +372,24 @@ private:
 		const Tile& tile = map.get_tile_map()[idx_tile_selected.y][idx_tile_selected.x];
 
 		return (tile.decoration < 0 && tile.direction == Tile:: Direction:: None && !tile.has_tower);
+	}
+
+	void repair_home()
+	{
+		ConfigManager* config = ConfigManager::GetInstance();
+		HomeManager* home = HomeManager::GetInstance();
+		CoinManager* coin = CoinManager::GetInstance();
+
+		if (home->get_current_hp_num() >= config->num_initial_hp)
+			return;
+		if (coin->get_current_coin_num() < config->home_repair_cost)
+			return;
+
+		coin->decrease_coin(config->home_repair_cost);
+		home->increase_hp(1);
+
+		static const ResourcesManager::SoundPool& sound_pool = ResourcesManager::GetInstance()->get_sound_pool();
+		Mix_PlayChannel(-1, sound_pool.find(ResID::Sound_TowerLevelUp)->second, 0);
 	}
 
 	void render_pause_dim()

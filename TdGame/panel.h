@@ -26,6 +26,12 @@ public:
 		visible = true;
 	}
 
+	void hide()
+	{
+		visible = false;
+		hovered_target = HoveredTarget::None;
+	}
+
 	void set_idx_tile(const SDL_Point& idx)
 	{
 		idx_tile_selected = idx;

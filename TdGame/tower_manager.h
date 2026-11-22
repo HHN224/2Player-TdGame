@@ -9,6 +9,7 @@
 #include"gunner_tower.h"
 #include"config_manager.h"
 #include"resources_manager.h"
+#include"coin_manager.h"
 
 #include<vector>
 
@@ -117,6 +118,7 @@ public:
 		position.x = rect.x + idx.x * SIZE_TILE + SIZE_TILE / 2;
 		position.y = rect.y + idx.y * SIZE_TILE + SIZE_TILE / 2;
 		tower->set_position(position);
+		tower->set_idx_tile(idx);
 		tower_list.push_back(tower);
 
 		static const ResourcesManager:: SoundPool& sound_pool = ResourcesManager:: GetInstance()->get_sound_pool();
@@ -144,6 +146,29 @@ public:
 		static const ResourcesManager::SoundPool& sound_pool = ResourcesManager::GetInstance()->get_sound_pool();
 
 		Mix_PlayChannel(-1, sound_pool.find(ResID:: Sound_TowerLevelUp)->second, 0);
+	}
+
+	bool sell_tower(const SDL_Point& idx)
+	{
+		for (auto it = tower_list.begin(); it != tower_list.end(); ++it)
+		{
+			Tower* tower = *it;
+			const SDL_Point& tile = tower->get_idx_tile();
+			if (tile.x != idx.x || tile.y != idx.y)
+				continue;
+
+			double refund = get_place_cost(tower->get_tower_type()) * ConfigManager::GetInstance()->tower_sell_ratio;
+			CoinManager::GetInstance()->increase_coin(refund);
+			ConfigManager::GetInstance()->map.remove_tower(idx);
+			delete tower;
+			tower_list.erase(it);
+
+			static const ResourcesManager::SoundPool& sound_pool = ResourcesManager::GetInstance()->get_sound_pool();
+			Mix_PlayChannel(-1, sound_pool.find(ResID::Sound_Coin)->second, 0);
+			return true;
+		}
+
+		return false;
 	}
 
 protected:

@@ -7,6 +7,7 @@ enum class EnemyType
 	RushSlime,
 	KingSlime,
 	Skeleton,
+	IronSkeleton,
 	Goblin,
 	GoblinPriest
 };

@@ -72,6 +72,21 @@ public:
 		this->position = position;
 	}
 
+	void set_idx_tile(const SDL_Point& idx)
+	{
+		idx_tile = idx;
+	}
+
+	const SDL_Point& get_idx_tile() const
+	{
+		return idx_tile;
+	}
+
+	TowerType get_tower_type() const
+	{
+		return tower_type;
+	}
+
 	const Vector2 get_size() const
 	{
 		return size;
@@ -101,6 +116,9 @@ public:
 
 		anim_current->on_render(renderer, point);
 	}
+
+private:
+	SDL_Point idx_tile = { -1, -1 };
 
 protected:
 	Vector2 size;	

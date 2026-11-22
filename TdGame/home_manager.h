@@ -15,6 +15,15 @@ public:
 		return num_hp;
 	}
 
+	void increase_hp(double val)
+	{
+		num_hp += val;
+
+		double max_hp = ConfigManager::GetInstance()->num_initial_hp;
+		if (num_hp > max_hp)
+			num_hp = max_hp;
+	}
+
 	void decrease_hp(double val)
 	{
 		num_hp -= val;

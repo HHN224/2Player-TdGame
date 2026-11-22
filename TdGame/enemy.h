@@ -114,6 +114,9 @@ public:
 
 	void decrease_hp(double val)
 	{
+		if (armor > 0)
+			val *= (1.0 - armor);
+
 		hp -= val;
 
 		if (hp <= 0)
@@ -226,6 +229,7 @@ protected:
 	double recover_interval = 0;
 	double recover_range = 0;
 	double recover_intensity;
+	double armor = 0;
 
 	SDL_Color color_hp_fill = { 226, 255, 194, 255 };
 	SDL_Color color_hp_border = { 116, 185, 124, 255 };

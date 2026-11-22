@@ -160,6 +160,7 @@
     <ClInclude Include="goblin_priest_enemy.h" />
     <ClInclude Include="gunner_tower.h" />
     <ClInclude Include="home_manager.h" />
+    <ClInclude Include="iron_skeleton_enemy.h" />
     <ClInclude Include="king_slime_enemy.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="map.h" />

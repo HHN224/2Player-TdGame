@@ -175,6 +175,9 @@ private:
 		else
 			text += "   x" + std::to_string((int)config->time_scale);
 
+		if (HomeManager::GetInstance()->get_current_hp_num() < config->num_initial_hp)
+			text += "   R" + std::to_string((int)config->home_repair_cost);
+
 		return text;
 	}
 

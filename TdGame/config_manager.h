@@ -51,6 +51,7 @@ public:
 		double recover_interval = 10;
 		double recover_range = 0;
 		double recover_intensity = 25;
+		double armor = 0;
 	};
 
 public:
@@ -79,12 +80,15 @@ public:
 	EnemyTemplate rush_slime_template;
 	EnemyTemplate king_slime_template;
 	EnemyTemplate skeleton_template;
+	EnemyTemplate iron_skeleton_template;
 	EnemyTemplate goblin_template;
 	EnemyTemplate goblin_priest_template;
 
 	const double num_initial_hp = 10;
 	const double num_initial_coin = 100;	
 	const double num_coin_per_prop = 10;
+	const double home_repair_cost = 40;
+	const double tower_sell_ratio = 0.6;
 
 public:
 	bool load_level_config(const std::string& path)
@@ -157,6 +161,8 @@ public:
 							spawn_event.enemy_type = EnemyType::KingSlime;
 						else if (str_enemy_type == "Skeleton")
 							spawn_event.enemy_type = EnemyType::Skeleton;
+						else if (str_enemy_type == "IronSkeleton")
+							spawn_event.enemy_type = EnemyType::IronSkeleton;
 						else if (str_enemy_type == "Goblin")
 							spawn_event.enemy_type = EnemyType::Goblin;
 						else if (str_enemy_type == "GoblinPriest")
@@ -222,6 +228,7 @@ public:
 		parse_enemy_template(rush_slime_template, cJSON_GetObjectItem(json_enemy, "rush_slime"));
 		parse_enemy_template(king_slime_template, cJSON_GetObjectItem(json_enemy, "king_slime"));
 		parse_enemy_template(skeleton_template, cJSON_GetObjectItem(json_enemy, "skeleton"));
+		parse_enemy_template(iron_skeleton_template, cJSON_GetObjectItem(json_enemy, "iron_skeleton"));
 		parse_enemy_template(goblin_template, cJSON_GetObjectItem(json_enemy, "goblin"));
 		parse_enemy_template(goblin_priest_template, cJSON_GetObjectItem(json_enemy, "goblin_priest"));
 
@@ -321,6 +328,7 @@ private:
 		cJSON* json_recover_interval = cJSON_GetObjectItem(json_root, "recover_interval");
 		cJSON* json_recover_range = cJSON_GetObjectItem(json_root, "recover_range");
 		cJSON* json_recover_intensity = cJSON_GetObjectItem(json_root, "recover_intensity");
+		cJSON* json_armor = cJSON_GetObjectItem(json_root, "armor");
 
 		if (json_hp && json_hp->type == cJSON_Number)
 			tpl.hp = json_hp->valuedouble;
@@ -336,6 +344,12 @@ private:
 			tpl.recover_range = json_recover_range->valuedouble;
 		if (json_recover_intensity && json_recover_intensity->type == cJSON_Number)
 			tpl.recover_intensity = json_recover_intensity->valuedouble;
+		if (json_armor && json_armor->type == cJSON_Number)
+			tpl.armor = json_armor->valuedouble;
+		if (tpl.armor < 0)
+			tpl.armor = 0;
+		if (tpl.armor > 0.85)
+			tpl.armor = 0.85;
 	}
 };
 

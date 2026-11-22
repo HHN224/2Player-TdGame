@@ -9,6 +9,7 @@
 #include"rush_slime_enemy.h"
 #include"king_slime_enemy.h"
 #include"skeleton_enemy.h"
+#include"iron_skeleton_enemy.h"
 #include"goblin_enemy.h"
 #include"goblin_priest_enemy.h"
 #include"bullet_manager.h"
@@ -68,6 +69,9 @@ public:
 			break;
 		case EnemyType::Skeleton:
 			enemy = new SkeletonEnemy();
+			break;
+		case EnemyType::IronSkeleton:
+			enemy = new IronSkeletonEnemy();
 			break;
 		case EnemyType::Goblin:
 			enemy = new GoblinEnemy();

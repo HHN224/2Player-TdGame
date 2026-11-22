@@ -197,6 +197,14 @@
 				"interval":	0,
 				"point":	2,
 				"enemy":	"Goblin"
+			}, {
+				"interval":	1.2,
+				"point":	1,
+				"enemy":	"IronSkeleton"
+			}, {
+				"interval":	0.8,
+				"point":	2,
+				"enemy":	"IronSkeleton"
 			}]
 	}, {
 		"rewards":	450,
@@ -265,5 +273,61 @@
 				"interval":	0.35,
 				"point":	2,
 				"enemy":	"KingSlime"
+			}]
+	}, {
+		"rewards":	550,
+		"interval":	8,
+		"spawn_list":	[{
+				"interval":	0.8,
+				"point":	1,
+				"enemy":	"IronSkeleton"
+			}, {
+				"interval":	0.4,
+				"point":	2,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	0.8,
+				"point":	1,
+				"enemy":	"IronSkeleton"
+			}, {
+				"interval":	0.4,
+				"point":	2,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	1,
+				"point":	2,
+				"enemy":	"IronSkeleton"
+			}, {
+				"interval":	0.5,
+				"point":	1,
+				"enemy":	"GoblinPriest"
+			}, {
+				"interval":	0.6,
+				"point":	2,
+				"enemy":	"Goblin"
+			}, {
+				"interval":	0.8,
+				"point":	1,
+				"enemy":	"IronSkeleton"
+			}, {
+				"interval":	0.4,
+				"point":	2,
+				"enemy":	"Skeleton"
+			}, {
+				"interval":	0.8,
+				"point":	1,
+				"enemy":	"KingSlime"
+			}, {
+				"interval":	0.5,
+				"point":	2,
+				"enemy":	"IronSkeleton"
+			}, {
+				"interval":	0.7,
+				"point":	1,
+				"enemy":	"RushSlime"
+			}, {
+				"interval":	0.4,
+				"point":	2,
+				"enemy":	"RushSlime"
 			}]
 	}]
