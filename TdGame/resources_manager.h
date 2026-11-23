@@ -27,6 +27,16 @@ enum class ResID
 	Tex_SkeletonSketch,
 	Tex_GoblinSketch,
 	Tex_GoblinPriestSketch,
+	Tex_RushSlime,
+	Tex_RushSlimeSketch,
+	Tex_BulwarkSlime,
+	Tex_BulwarkSlimeSketch,
+	Tex_IronSkeleton,
+	Tex_IronSkeletonSketch,
+	Tex_ShadeGoblin,
+	Tex_ShadeGoblinSketch,
+	Tex_DarkPriest,
+	Tex_DarkPriestSketch,
 
 	Tex_BulletArrow,
 	Tex_BulletAxe,
@@ -120,6 +130,13 @@ public:
 		texture_pool[ResID::Tex_SkeletonSketch] = IMG_LoadTexture(renderer, "resources/enemy_skeleton_sketch.png");
 		texture_pool[ResID::Tex_GoblinSketch] = IMG_LoadTexture(renderer, "resources/enemy_goblin_sketch.png");
 		texture_pool[ResID::Tex_GoblinPriestSketch] = IMG_LoadTexture(renderer, "resources/enemy_goblin_priest_sketch.png");
+
+		if (!load_enemy_textures(renderer, "resources/enemy_rush_slime.png", ResID::Tex_RushSlime, ResID::Tex_RushSlimeSketch)
+			|| !load_enemy_textures(renderer, "resources/enemy_bulwark_slime.png", ResID::Tex_BulwarkSlime, ResID::Tex_BulwarkSlimeSketch)
+			|| !load_enemy_textures(renderer, "resources/enemy_iron_skeleton.png", ResID::Tex_IronSkeleton, ResID::Tex_IronSkeletonSketch)
+			|| !load_enemy_textures(renderer, "resources/enemy_shade_goblin.png", ResID::Tex_ShadeGoblin, ResID::Tex_ShadeGoblinSketch)
+			|| !load_enemy_textures(renderer, "resources/enemy_dark_priest.png", ResID::Tex_DarkPriest, ResID::Tex_DarkPriestSketch))
+			return false;
 
 		texture_pool[ResID::Tex_BulletArrow] = IMG_LoadTexture(renderer, "resources/bullet_arrow.png");
 		texture_pool[ResID::Tex_BulletAxe] = IMG_LoadTexture(renderer, "resources/bullet_axe.png");
@@ -223,6 +240,48 @@ protected:
 	~ResourcesManager() = default;
 
 private:
+	bool load_enemy_textures(SDL_Renderer* renderer, const char* path, ResID color_id, ResID sketch_id)
+	{
+		SDL_Surface* source = IMG_Load(path);
+		if (!source)
+			return false;
+
+		SDL_Surface* surface = SDL_ConvertSurfaceFormat(source, SDL_PIXELFORMAT_RGBA32, 0);
+		SDL_FreeSurface(source);
+		if (!surface)
+			return false;
+
+		SDL_Texture* color = SDL_CreateTextureFromSurface(renderer, surface);
+		if (!color || SDL_LockSurface(surface) != 0)
+		{
+			if (color)
+				SDL_DestroyTexture(color);
+			SDL_FreeSurface(surface);
+			return false;
+		}
+
+		auto* pixels = static_cast<Uint8*>(surface->pixels);
+		for (int y = 0; y < surface->h; ++y)
+		{
+			Uint8* pixel = pixels + y * surface->pitch;
+			for (int x = 0; x < surface->w; ++x, pixel += 4)
+				pixel[0] = pixel[1] = pixel[2] = 255;
+		}
+		SDL_UnlockSurface(surface);
+
+		SDL_Texture* sketch = SDL_CreateTextureFromSurface(renderer, surface);
+		SDL_FreeSurface(surface);
+		if (!sketch)
+		{
+			SDL_DestroyTexture(color);
+			return false;
+		}
+
+		texture_pool[color_id] = color;
+		texture_pool[sketch_id] = sketch;
+		return true;
+	}
+
 	FontPool font_pool;
 	SoundPool sound_pool;
 	MusicPool music_pool;
