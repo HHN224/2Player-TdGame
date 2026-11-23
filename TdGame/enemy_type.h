@@ -9,6 +9,7 @@ enum class EnemyType
 	Skeleton,
 	IronSkeleton,
 	Goblin,
+	ShadeGoblin,
 	GoblinPriest
 };
 

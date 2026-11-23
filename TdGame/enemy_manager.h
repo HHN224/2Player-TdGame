@@ -11,6 +11,7 @@
 #include"skeleton_enemy.h"
 #include"iron_skeleton_enemy.h"
 #include"goblin_enemy.h"
+#include"shade_goblin_enemy.h"
 #include"goblin_priest_enemy.h"
 #include"bullet_manager.h"
 #include"coin_manager.h"
@@ -75,6 +76,9 @@ public:
 			break;
 		case EnemyType::Goblin:
 			enemy = new GoblinEnemy();
+			break;
+		case EnemyType::ShadeGoblin:
+			enemy = new ShadeGoblinEnemy();
 			break;
 		case EnemyType::GoblinPriest:
 			enemy = new GoblinPriestEnemy();

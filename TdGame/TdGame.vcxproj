@@ -169,6 +169,7 @@
     <ClInclude Include="player_manager.h" />
     <ClInclude Include="resources_manager.h" />
     <ClInclude Include="route.h" />
+    <ClInclude Include="shade_goblin_enemy.h" />
     <ClInclude Include="rush_slime_enemy.h" />
     <ClInclude Include="shell_bullet.h" />
     <ClInclude Include="skeleton_enemy.h" />

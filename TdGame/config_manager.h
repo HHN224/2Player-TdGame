@@ -82,6 +82,7 @@ public:
 	EnemyTemplate skeleton_template;
 	EnemyTemplate iron_skeleton_template;
 	EnemyTemplate goblin_template;
+	EnemyTemplate shade_goblin_template;
 	EnemyTemplate goblin_priest_template;
 
 	const double num_initial_hp = 7;
@@ -165,6 +166,8 @@ public:
 							spawn_event.enemy_type = EnemyType::IronSkeleton;
 						else if (str_enemy_type == "Goblin")
 							spawn_event.enemy_type = EnemyType::Goblin;
+						else if (str_enemy_type == "ShadeGoblin")
+							spawn_event.enemy_type = EnemyType::ShadeGoblin;
 						else if (str_enemy_type == "GoblinPriest")
 							spawn_event.enemy_type = EnemyType::GoblinPriest;
 					}
@@ -230,6 +233,7 @@ public:
 		parse_enemy_template(skeleton_template, cJSON_GetObjectItem(json_enemy, "skeleton"));
 		parse_enemy_template(iron_skeleton_template, cJSON_GetObjectItem(json_enemy, "iron_skeleton"));
 		parse_enemy_template(goblin_template, cJSON_GetObjectItem(json_enemy, "goblin"));
+		parse_enemy_template(shade_goblin_template, cJSON_GetObjectItem(json_enemy, "shade_goblin"));
 		parse_enemy_template(goblin_priest_template, cJSON_GetObjectItem(json_enemy, "goblin_priest"));
 
 		cJSON_Delete(json_root);
