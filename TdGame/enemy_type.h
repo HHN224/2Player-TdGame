@@ -10,7 +10,8 @@ enum class EnemyType
 	IronSkeleton,
 	Goblin,
 	ShadeGoblin,
-	GoblinPriest
+	GoblinPriest,
+	DarkPriest
 };
 
 #endif // !_ENEMY_TYPE_H_

@@ -13,6 +13,7 @@
 #include"goblin_enemy.h"
 #include"shade_goblin_enemy.h"
 #include"goblin_priest_enemy.h"
+#include"dark_priest_enemy.h"
 #include"bullet_manager.h"
 #include"coin_manager.h"
 
@@ -82,6 +83,9 @@ public:
 			break;
 		case EnemyType::GoblinPriest:
 			enemy = new GoblinPriestEnemy();
+			break;
+		case EnemyType::DarkPriest:
+			enemy = new DarkPriestEnemy();
 			break;
 		default:
 			enemy = new SlimeEnemy();

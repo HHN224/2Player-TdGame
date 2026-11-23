@@ -122,6 +122,16 @@
             "recover_interval": 6,
             "recover_range": 6,
             "recover_intensity": 18
+        },
+        "dark_priest":
+        {
+            "hp": 110,
+            "speed": 0.7,
+            "damage": 1,
+            "reward_ratio": 1,
+            "recover_interval": 4,
+            "recover_range": 4,
+            "recover_intensity": 24
         }
     }
 }

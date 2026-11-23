@@ -152,6 +152,7 @@
     <ClInclude Include="coin_manager.h" />
     <ClInclude Include="coin_prop.h" />
     <ClInclude Include="config_manager.h" />
+    <ClInclude Include="dark_priest_enemy.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy_manager.h" />
     <ClInclude Include="enemy_type.h" />
