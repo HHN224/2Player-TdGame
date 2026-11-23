@@ -20,7 +20,7 @@
             "interval": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             "damage": [5, 1, 1, 1, 10, 10, 10, 10, 10, 10],
             "view_range": [3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-            "cost": [10, 2, 2, 10, 10, 10, 10, 10, 10, 10],
+            "cost": [15, 12, 12, 15, 15, 15, 15, 15, 15, 15],
             "upgrade_cost": [10, 10, 10, 10, 10, 10, 10, 10, 10]
         },
         "axeman":
@@ -28,7 +28,7 @@
             "interval": [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
             "damage": [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
             "view_range": [4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-            "cost": [20, 20, 20, 20, 20, 20, 20, 20, 20, 20],
+            "cost": [28, 28, 28, 28, 28, 28, 28, 28, 28, 28],
             "upgrade_cost": [10, 10, 10, 10, 10, 10, 10, 10, 10]
         },
         "gunner":
@@ -36,7 +36,7 @@
             "interval": [3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
             "damage": [20, 10, 10, 10, 10, 10, 10, 10, 10, 10],
             "view_range": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-            "cost": [30, 30, 30, 30, 30, 30, 30, 30, 30, 30],
+            "cost": [45, 45, 45, 45, 45, 45, 45, 45, 45, 45],
             "upgrade_cost": [10, 10, 10, 10, 10, 10, 10, 10, 10]
         }
     },
@@ -44,29 +44,29 @@
     {
         "slime":
         {
-            "hp": 20,
-            "speed": 1,
+            "hp": 28,
+            "speed": 1.15,
             "damage": 1,
-            "reward_ratio": 0.8,
+            "reward_ratio": 0.55,
             "recover_interval": 100,
             "recover_range": -1,
             "recover_intensity": 10
         },
         "rush_slime":
         {
-            "hp": 16,
-            "speed": 2.6,
-            "damage": 1,
-            "reward_ratio": 0.45,
+            "hp": 24,
+            "speed": 2.9,
+            "damage": 2,
+            "reward_ratio": 0.4,
             "recover_interval": 100,
             "recover_range": -1,
             "recover_intensity": 0
         },
         "king_slime":
         {
-            "hp": 75,
-            "speed": 0.75,
-            "damage": 1,
+            "hp": 130,
+            "speed": 0.85,
+            "damage": 2,
             "reward_ratio": 1,
             "recover_interval": 100,
             "recover_range": -1,
@@ -74,8 +74,8 @@
         },
         "skeleton":
         {
-            "hp": 40,
-            "speed": 1.5,
+            "hp": 58,
+            "speed": 1.7,
             "damage": 1,
             "reward_ratio": 1,
             "recover_interval": 100,
@@ -84,20 +84,20 @@
         },
         "iron_skeleton":
         {
-            "hp": 90,
-            "speed": 0.8,
-            "damage": 2,
-            "reward_ratio": 1,
+            "hp": 150,
+            "speed": 0.85,
+            "damage": 3,
+            "reward_ratio": 0.9,
             "recover_interval": 100,
             "recover_range": -1,
             "recover_intensity": 0,
-            "armor": 0.4
+            "armor": 0.5
         },
         "goblin":
         {
-            "hp": 50,
-            "speed": 1.5,
-            "damage": 1,
+            "hp": 72,
+            "speed": 1.65,
+            "damage": 2,
             "reward_ratio": 1,
             "recover_interval": 100,
             "recover_range": -1,
@@ -105,13 +105,13 @@
         },
         "goblin_priest":
         {
-            "hp": 100,
-            "speed": 0.75,
+            "hp": 140,
+            "speed": 0.8,
             "damage": 1,
             "reward_ratio": 1,
-            "recover_interval": 10,
-            "recover_range": 5,
-            "recover_intensity": 10
+            "recover_interval": 6,
+            "recover_range": 6,
+            "recover_intensity": 18
         }
     }
 }

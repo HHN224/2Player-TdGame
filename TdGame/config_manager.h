@@ -84,10 +84,10 @@ public:
 	EnemyTemplate goblin_template;
 	EnemyTemplate goblin_priest_template;
 
-	const double num_initial_hp = 10;
-	const double num_initial_coin = 100;	
+	const double num_initial_hp = 7;
+	const double num_initial_coin = 60;	
 	const double num_coin_per_prop = 10;
-	const double home_repair_cost = 40;
+	const double home_repair_cost = 50;
 	const double tower_sell_ratio = 0.6;
 
 public:

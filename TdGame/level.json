@@ -1,5 +1,5 @@
 [{
-		"rewards":	100,
+		"rewards":	70,
 		"interval":	3,
 		"spawn_list":	[{
 				"interval":	0,
@@ -35,7 +35,7 @@
 				"enemy":	"Slim"
 			}]
 	}, {
-		"rewards":	200,
+		"rewards":	120,
 		"interval":	5,
 		"spawn_list":	[{
 				"interval":	1,
@@ -75,7 +75,7 @@
 				"enemy":	"KingSlim"
 			}]
 	}, {
-		"rewards":	300,
+		"rewards":	160,
 		"interval":	10,
 		"spawn_list":	[{
 				"interval":	1,
@@ -147,7 +147,7 @@
 				"enemy":	"RushSlime"
 			}]
 	}, {
-		"rewards":	300,
+		"rewards":	180,
 		"interval":	6,
 		"spawn_list":	[{
 				"interval":	1,
@@ -207,7 +207,7 @@
 				"enemy":	"IronSkeleton"
 			}]
 	}, {
-		"rewards":	450,
+		"rewards":	220,
 		"interval":	8,
 		"spawn_list":	[{
 				"interval":	0.6,
@@ -275,7 +275,7 @@
 				"enemy":	"KingSlime"
 			}]
 	}, {
-		"rewards":	550,
+		"rewards":	280,
 		"interval":	8,
 		"spawn_list":	[{
 				"interval":	0.8,
