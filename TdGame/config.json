@@ -72,6 +72,17 @@
             "recover_range": -1,
             "recover_intensity": 10
         },
+        "bulwark_slime":
+        {
+            "hp": 220,
+            "speed": 0.55,
+            "damage": 3,
+            "reward_ratio": 1,
+            "recover_interval": 100,
+            "recover_range": -1,
+            "recover_intensity": 0,
+            "armor": 0.35
+        },
         "skeleton":
         {
             "hp": 58,

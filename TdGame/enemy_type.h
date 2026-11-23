@@ -6,6 +6,7 @@ enum class EnemyType
 	Slime,
 	RushSlime,
 	KingSlime,
+	BulwarkSlime,
 	Skeleton,
 	IronSkeleton,
 	Goblin,

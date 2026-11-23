@@ -146,6 +146,7 @@
     <ClInclude Include="axeman_tower.h" />
     <ClInclude Include="axe_bullet.h" />
     <ClInclude Include="banner.h" />
+    <ClInclude Include="bulwark_slime_enemy.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="bullet_manager.h" />
     <ClInclude Include="bullet_type.h" />

@@ -79,6 +79,7 @@ public:
 	EnemyTemplate slime_template;
 	EnemyTemplate rush_slime_template;
 	EnemyTemplate king_slime_template;
+	EnemyTemplate bulwark_slime_template;
 	EnemyTemplate skeleton_template;
 	EnemyTemplate iron_skeleton_template;
 	EnemyTemplate goblin_template;
@@ -161,6 +162,8 @@ public:
 							spawn_event.enemy_type = EnemyType::RushSlime;
 						else if (str_enemy_type == "KingSlime" || str_enemy_type == "KingSlim")
 							spawn_event.enemy_type = EnemyType::KingSlime;
+						else if (str_enemy_type == "BulwarkSlime")
+							spawn_event.enemy_type = EnemyType::BulwarkSlime;
 						else if (str_enemy_type == "Skeleton")
 							spawn_event.enemy_type = EnemyType::Skeleton;
 						else if (str_enemy_type == "IronSkeleton")
@@ -233,6 +236,7 @@ public:
 		parse_enemy_template(slime_template, cJSON_GetObjectItem(json_enemy, "slime"));
 		parse_enemy_template(rush_slime_template, cJSON_GetObjectItem(json_enemy, "rush_slime"));
 		parse_enemy_template(king_slime_template, cJSON_GetObjectItem(json_enemy, "king_slime"));
+		parse_enemy_template(bulwark_slime_template, cJSON_GetObjectItem(json_enemy, "bulwark_slime"));
 		parse_enemy_template(skeleton_template, cJSON_GetObjectItem(json_enemy, "skeleton"));
 		parse_enemy_template(iron_skeleton_template, cJSON_GetObjectItem(json_enemy, "iron_skeleton"));
 		parse_enemy_template(goblin_template, cJSON_GetObjectItem(json_enemy, "goblin"));
