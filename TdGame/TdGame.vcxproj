@@ -166,6 +166,7 @@
     <ClInclude Include="king_slime_enemy.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="map_selector.h" />
     <ClInclude Include="panel.h" />
     <ClInclude Include="place_panel.h" />
     <ClInclude Include="player_manager.h" />

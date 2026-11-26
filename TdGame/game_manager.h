@@ -14,6 +14,9 @@
 #include"upgrade_panle.h"
 #include"player_manager.h"
 #include"banner.h"
+#include"map_selector.h"
+
+#include<string>
 
 #include<iostream>
 #include<SDL.h>
@@ -28,6 +31,21 @@ class GameManager : public Manager <GameManager>
 public:
 	int run(int argc, char** argv)
 	{
+		std::string map_path;
+		if (!MapSelector().pick(renderer, window, map_path))
+			return 0;
+
+		ConfigManager* config = ConfigManager::GetInstance();
+		bool map_loaded = config->map.load(map_path);
+		init_assert(map_loaded, "map load failed!");
+		if (!map_loaded)
+			return 0;
+
+		bool map_ready = generate_tile_map_texture();
+		init_assert(map_ready, "generate tile map texture failed!");
+		if (!map_ready)
+			return 0;
+
 		Mix_FadeInMusic(ResourcesManager::GetInstance()->get_music_pool().find(ResID:: Music_BGM)->second, -1, 1500);
 
 		Uint64 last_time = SDL_GetPerformanceCounter();
@@ -72,7 +90,6 @@ protected:
 
 		ConfigManager* config = ConfigManager::GetInstance();
 
-		init_assert(config->map.load("map.csv"), "map load failed!");
 		init_assert(config->load_level_config("level.json"), "load level config failed!");
 		init_assert(config->load_game_config("config.json"), "load game config failed!");
 
@@ -84,8 +101,6 @@ protected:
 		init_assert(renderer, "renderer create failed!");
 
 		init_assert(ResourcesManager::GetInstance()->load_from_file(renderer), "load game rescource failed!");
-
-		init_assert(generate_tile_map_texture(), "generate tile map texture failed!");
 
 		status_bar.set_position(15, 15);
 

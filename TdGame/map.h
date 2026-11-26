@@ -149,6 +149,9 @@ private:
 
 	void generate_map_cache()
 	{
+		idx_home = { 0, 0 };
+		spawner_route_pool.clear();
+
 		for (int y = 0; y < get_height(); y++)
 		{
 			for (int x = 0; x < get_width(); x++)
