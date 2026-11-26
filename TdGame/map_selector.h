@@ -9,7 +9,7 @@
 class MapSelector
 {
 public:
-	bool pick(SDL_Renderer* renderer, SDL_Window* window, std::string& path)
+	bool pick(SDL_Renderer* renderer, SDL_Window* window, std::string& path, std::string& name)
 	{
 		struct Choice
 		{
@@ -151,7 +151,10 @@ public:
 		}
 
 		if (accepted)
+		{
 			path = choices[selected].file;
+			name = choices[selected].name;
+		}
 
 		SDL_DestroyTexture(tex_title);
 		SDL_DestroyTexture(tex_hint);

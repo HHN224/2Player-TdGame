@@ -32,10 +32,12 @@ public:
 	int run(int argc, char** argv)
 	{
 		std::string map_path;
-		if (!MapSelector().pick(renderer, window, map_path))
+		std::string map_name;
+		if (!MapSelector().pick(renderer, window, map_path, map_name))
 			return 0;
 
 		ConfigManager* config = ConfigManager::GetInstance();
+		config->map_name = map_name;
 		bool map_loaded = config->map.load(map_path);
 		init_assert(map_loaded, "map load failed!");
 		if (!map_loaded)
@@ -163,6 +165,9 @@ private:
 				break;
 			case SDLK_r:
 				repair_home();
+				break;
+			case SDLK_n:
+				WaveManager::GetInstance()->call_next_wave();
 				break;
 			default:
 				break;

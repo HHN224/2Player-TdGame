@@ -161,7 +161,10 @@ private:
 		const ConfigManager* config = ConfigManager::GetInstance();
 		const WaveManager* waves = WaveManager::GetInstance();
 		const int total = (int)config->wave_list.size();
-		std::string text = "第 " + std::to_string(waves->get_wave_number()) + "/" + std::to_string(total) + " 波";
+		std::string text = config->map_name;
+		if (!text.empty())
+			text += "  ";
+		text += "第 " + std::to_string(waves->get_wave_number()) + "/" + std::to_string(total) + " 波";
 
 		if (config->is_paused)
 			text += "   暂停";
@@ -171,6 +174,9 @@ private:
 			if (seconds < 1)
 				seconds = 1;
 			text += "   下波 " + std::to_string(seconds) + " 秒";
+			const int bonus = waves->get_call_bonus();
+			if (bonus > 0)
+				text += "  N+" + std::to_string(bonus);
 		}
 		else
 			text += "   x" + std::to_string((int)config->time_scale);

@@ -65,6 +65,7 @@ public:
 	bool is_game_win = true;
 	bool is_game_over = false;
 	bool is_paused = false;
+	std::string map_name;
 	double time_scale = 1;
 	SDL_Rect rect_tile_map = { 0 };
 

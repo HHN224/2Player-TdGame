@@ -7,6 +7,8 @@
 #include"enemy_manager.h"
 #include"coin_manager.h"
 
+#include<cmath>
+
 class WaveManager : public Manager<WaveManager>
 {
 	friend class Manager<WaveManager>;
@@ -65,6 +67,28 @@ public:
 			return 0;
 
 		return timer_start_wave.get_remaining();
+	}
+
+	int get_call_bonus() const
+	{
+		if (is_wave_started)
+			return 0;
+
+		return (int)std::ceil(timer_start_wave.get_remaining() * 4.0);
+	}
+
+	bool call_next_wave()
+	{
+		if (ConfigManager::GetInstance()->is_game_over || is_wave_started)
+			return false;
+
+		const int bonus = get_call_bonus();
+		timer_start_wave.set_wait_time(0);
+		timer_start_wave.on_update(0);
+		if (bonus > 0)
+			CoinManager::GetInstance()->increase_coin(bonus);
+
+		return is_wave_started;
 	}
 protected:
 
